@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8">
+  <title></title>
+    <style>
+      h1{
+        border-width:5px;
+        border-color:red;
+        border-style: solid;
+        margin: 0;
+        text-align: center;
+      }
+
+    </style>
+  </head>
+<body>한국의 문화</body></html><br>
+
+
+
+
+<body bgcolor="skyblue">
+  <div style="visibility: hidden; position: absolute;" id="webcam-container"></div>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
+<script type="text/javascript">
+    // More API functions here:
+    // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/image
+
+    // the link to your model provided by Teachable Machine export panel
+    const URL = "https://teachablemachine.withgoogle.com/models/r8X8UCIeo/";
+
+    let model, webcam, maxPredictions;
+
+    // Load the image model and setup the webcam
+    async function init() {
+        const modelURL = URL + "model.json";
+        const metadataURL = URL + "metadata.json";
+
+        // load the model and metadata
+        // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
+        // or files from your local hard drive
+        // Note: the pose library adds "tmImage" object to your window (window.tmImage)
+        model = await tmImage.load(modelURL, metadataURL);
+        maxPredictions = model.getTotalClasses();
+
+        // Convenience function to setup a webcam
+        const flip = true; // whether to flip the webcam
+        webcam = new tmImage.Webcam(200, 200, flip); // width, height, flip
+        await webcam.setup(); // request access to the webcam
+        await webcam.play();
+        window.requestAnimationFrame(loop);
+
+        // append elements to the DOM
+        document.getElementById("webcam-container").appendChild(webcam.canvas);
+    }
+
+    async function loop() {
+        webcam.update(); // update the webcam frame
+        await predict();
+        window.requestAnimationFrame(loop);
+    }
+
+    // run the webcam image through the image model
+    async function predict() {
+        // predict can take in an image, video or canvas html element
+        const prediction = await model.predict(webcam.canvas);
+        if (prediction[0].probability > 0.5) {
+            document.querySelector('body').style.backgroundColor = 'white'
+            document.querySelector('body').style.color = 'black'
+        }
+        else {
+            document.querySelector('body').style.backgroundColor = 'black'
+            document.querySelector('body').style.color = 'white'
+        }
+    }
+    init()
+</script>
+1.한국의 생활문화
+<li>한국</li>
+조선전의 고려, 백제, 신라의 의복도 전통의상이지만 한국의 전통의상을 소개할때는 부로 한복으로 소개한다.<br><br>
+<li>온돌</li>
+온돌(溫堗) 또는 구들은 방 바닥을 따뜻하게 하는 한국의 전통적인 가옥 난방 방법이다.
+ 한옥의 아궁이에서 불을 피우고, 아궁이에서 생성된 열기를 머금은 뜨거운 연기가 방바닥에 깔린 구들장 밑을 지나면서 난방이 되고, 그 연기는 구들장 끝 굴뚝으로 빠져나가는 방식의 난방법이다.<br>
+ <iframe width="560" height="315" src="https://www.youtube.com/embed/RkiKX-tijug" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe><br><br>
+2.무형문화재<br>
+<li>단오제</li>
+단오의 유래는 중국 초나라 회왕 때 충신 굴원이라는 사람에서 시작된다<br>
+단오 또는 수릿날은 한국 명절의 하나로, 음력 5월 5일이다.<br>
+ 더운 여름을 맞기 전의 초하의 계절이며, 모내기를 끝내고 풍년을 기원하는 기풍제이기도 하다.<br>
+  대한민국의 중요무형문화재 제13호로 지정되어 있는 강릉 단오제가 2005년 유네스코가 지정하는 세계무형유산인 '인류구전 및 무형유산걸작'에 선정되었다.<br>
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/We1O4VhoxCg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe><br><br>
+<li>판소리</li><br>
+판소리는 한 명의 소리꾼이 북치는 사람인 고수의 장단에 맞추어 소리(창), 아니리(말), 너름새(몸짓)을 섞어가며 구연(口演)하는 일종의 솔로 오페라다.<br>
+판소리는 창(唱)의 문학의 한 형태로서, 특히 한국에서 18세기 부터 오늘날까지 전승되어 온 음악 예능의 한 형태이다. 판소리는 판+소리의 합성어로서 원래는 판놀음 속에서 부르는 소리를 말했다.<br>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/3eMlSCq4bKM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> <br><br>
+3.유형문화재<br>
+<li>팔만대장경</li><br>
+고려는 불교를 통치이념으로 삼고는 나라였는데 부처의 힘으로 몽골과의 친입을 막고자만들었다는것이 표면적이 이유이고<br>
+실질적인 이유는 외세의 친입으로 불안정한 나라를 팔만대장경을 제작함으로서 백성들의 시선을 불안정한 나라가 아닌 대장경으로 돌려 나라를 안정화 할려는 이유도 있다.<br>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/k33ex6E7d8M" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> <br><br>
+<li>한글</li><br>
+한글은 1443년에 창제되어 1446년에 반포되었다. 그 창제원리에 대해서는 많은 학설이 있는데, 훈민정음 해례본에는 'ㄱ', 'ㄴ', 'ㅁ', 'ㅅ', 'ㅇ'이 조음 기관을 본따서 만들어졌으며 그 외의 자음은 이를 편집한 것이라 적혀져 있다.<br>
+이때문에 창제 역사와 원리가 설명되어 있는 유일한 문자이기도 하다.<br>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/k33ex6E7d8M" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> <br><br>
+<li>고인</li><br>
+고인돌은 고인의 시신을 넣은 관을 묻는 크고 평평한 바위를 몇 개의 바위로 괴어 놓은 고대의 거석구조물을 말한다.<br>
+만들어진 시기는 나라마다 조금씩 차이가 나지만 유럽과 아프리카는 기원전 5,000년 ~ 기원전 4,000년, 동아시아는 기원전 2,500년 ~ 기원전 수백 년 전후로 추정된다. <br>
+숫자상으로 한국에 남·북한을 합쳐 4만기 정도로 가장 많다.<br>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/KuLit6OmTyI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
